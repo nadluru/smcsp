@@ -1,0 +1,39 @@
+function W = RefineJigsawGraph(W,Nodes,M,nodes)
+
+for Idx1 = 1:length(Nodes)
+    Node1 = Nodes(Idx1);
+    Idxnode1 = ceil(Node1/M);
+    IdxLabel1 = Node1 - M*(Idxnode1-1);
+    
+     Neighbors = nodes{Idxnode1}.farsIndex;% only the neighbors should be considered
+    SIZE = length(Neighbors);
+    Set2_node = zeros(SIZE*M,1);
+    Set2_Label = zeros(SIZE*M,1);
+    for IdxNei = 1:length(Neighbors)
+        Set2_node((IdxNei-1)*M+1:(IdxNei-1)*M+M) = Neighbors(IdxNei);
+        Set2_Label((IdxNei-1)*M+1:(IdxNei-1)*M+M) = 1:M;
+    end
+    
+    for ll = 1:SIZE*M
+        
+        Idxnode2 = Set2_node(ll);
+        IdxLabel2 = Set2_Label(ll);
+        if IdxLabel1 == IdxLabel2 || Idxnode1 == Idxnode2% exclude the same location has the different label, and different location contains the same label
+            % W(Node1,(Idxnode2-1)*M+IdxLabel2) = 0;
+            continue;
+        else
+    
+    
+    for Node2 = 1:length(W)
+        if Node2 ~= Node1
+            Idxnode2 = ceil(Node2/M);
+            IdxLabel2 = Node2 - M*(Idxnode1-1);
+            if Idxnode1 == Idxnode2 || IdxLabel1 == IdxLabel2% remove the connections to all the nodes
+                W(Node2,:) = 0;
+                W(:,Node2) = 0;
+            end
+        else
+            W(Node1,Node2) = 1;
+        end
+    end
+end

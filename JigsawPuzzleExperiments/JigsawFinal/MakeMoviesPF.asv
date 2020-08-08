@@ -1,0 +1,6 @@
+
+IMPath = 'C:\yxw\CVPR 2011\jigsawCode\jigsawCode\Results\ParticleIteration\ImNo_2_PatchSize_56\noFixInd_1\';
+
+for k = 1:107
+    ims = imread(strcat(IMPath,));
+end

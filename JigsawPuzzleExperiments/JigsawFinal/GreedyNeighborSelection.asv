@@ -1,0 +1,13 @@
+function [Cluster] = GreedyNeighborSelection(W,Sg);
+
+TmpW = W;%zeros(size(W));
+
+ TmpW(Sg{1},:) = W(Sg{1},:);
+  TmpW(:,Sg{1}) = W(Sg{1},:);
+% for k = 1:length(Sg{1})
+%     TmpW(Sg{1}(k),Sg{1}(k)) = 0;
+% end
+[V1,Node] = sort(sum(TmpW),'descend');
+Cluster = [Node(1:length(Sg{1})+1)' V1(1:length(Sg{1})+1)];
+
+
